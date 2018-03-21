@@ -1,22 +1,8 @@
 require('dotenv').config();
-const mysql = require('mysql');
-const { queryAllEmployees, createEmployee, deleteEmployee, queryAllEmployeesSp, queryGetEmployeeByIdSp } = require('./queries');
+//const { queryAllEmployees, createEmployee, deleteEmployee, queryAllEmployeesSp, queryGetEmployeeByIdSp } = require('./queries');
+const db = require('./db/db');
+const queries = require('./queries');
 
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: 'development'
+const connection = db.connectToDb().then((con) => {
+    queries.queryAllEmployees(con);
 });
-
-connection.connect((err) => {
-    if(err) {
-        throw err
-    }
-    console.log('Connected');
-    queryGetEmployeeByIdSp(connection, 2);
-    connection.end((err) => {
-        console.log('Disconnected')
-    })
-});
-

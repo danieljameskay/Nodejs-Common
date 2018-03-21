@@ -2,8 +2,8 @@
 
 const fs = require('fs'),
 
-        // argv is an argument vector which accepts command-line arguments.
-        filename = process.argv[2];
+// argv is an argument vector which accepts command-line arguments.
+filename = process.argv[2];
 
 if(!filename){
     throw Error("A file to watch must be specified");
