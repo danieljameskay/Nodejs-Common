@@ -1,9 +1,10 @@
 const mysql = require('mysql');
 
+// In normal cicumstances this would be stored in an env file.
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
+    user: "root",
+    password: "",
     database: 'development'
 });
 
@@ -13,11 +14,12 @@ function connectToDb() {
             if(err) {
                 reject(err)
             }
+            console.log(`Connected to ${connection.config.database} database.`)
             resolve(connection);
-    
-            // connection.end((err) => {
-            //     console.log('Disconnected')
-            // });
+        });
+
+        connection.end((err) => {
+            console.log('Disconnected.')
         });
     })
 }
