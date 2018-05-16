@@ -1,6 +1,16 @@
-const write = require('stream');
+const stream = require('stream');
 
-const writeable = new stream.Writeable({
-    highWaterMark: 16000,
-    decodeStrings: true
+const writable = new stream.Writable({
+    decodeStrings: false
 });
+
+// Inside _write the logic to write to a destination.
+writable._write = (chunk, encoding, callback) => {
+  console.log(chunk.toString());
+  callback();
+};
+
+let written = writable.write(Buffer.alloc(32, 'A'));
+writable.end();
+
+console.log(written);
